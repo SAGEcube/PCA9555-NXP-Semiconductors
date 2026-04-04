@@ -1,47 +1,4 @@
-`timescale 1ns/1ps
-
-module pca9555 (
-    input  wire        clk,
-    input  wire        rst,
-    input  wire        SCL,
-    input  wire        SDA_in,
-    output reg         SDA_oe,
-    input  wire        A0, A1, A2,
-    output wire        int_active,
-    output wire [7:0]  port0_oe,
-    output wire [7:0]  port0_out,
-    input  wire [7:0]  port0_in,
-    output wire [7:0]  port1_oe,
-    output wire [7:0]  port1_out,
-    input  wire [7:0]  port1_in
-);
-
-    // --------------------------------------------------------
-    // Internal registers
-    // --------------------------------------------------------
-    reg [7:0] config_reg0;
-    reg [7:0] config_reg1;
-    reg [7:0] output_reg0;
-    reg [7:0] output_reg1;
-    reg [7:0] polarity_reg0;
-    reg [7:0] polarity_reg1;
-    reg [7:0] input_latch0;
-    reg [7:0] input_latch1;
-
-    // --------------------------------------------------------
-    // Port output assignments
-    // --------------------------------------------------------
-    assign port0_oe  = ~config_reg0;   // config=1 -> input (oe=0)
-    assign port1_oe  = ~config_reg1;
-    assign port0_out = output_reg0;
-    assign port1_out = output_reg1;
-
-    // Input with polarity inversion (combinational)
-    wire [7:0] input_reg0 = port0_in ^ polarity_reg0;
-    wire [7:0] input_reg1 = port1_in ^ polarity_reg1;
-
-    // Fixed device address (A0=A1=A2=0 -> 0b0100_000)
-    wire [6:0] DEV_ADDR = 7'b0100000
+`
 `timescale 1ns/1ps
 
 module pca9555 (
